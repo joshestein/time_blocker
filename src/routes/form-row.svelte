@@ -13,9 +13,15 @@
 
 <style>
 	div {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-between;
+			align-items: center;
+	}
+	input {
+      border: 1px solid var(--accent);
+			font-size: 1rem;
+      padding: 0.25rem;
+      box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 	}
 </style>

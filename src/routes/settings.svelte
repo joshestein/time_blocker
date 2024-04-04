@@ -50,7 +50,7 @@
 <style>
 	.settings-wrapper {
 		display: flex;
-		flex-direction: row;
+		flex-flow: row wrap;
 		justify-content: space-between;
 		gap: 1.5rem;
 	}
@@ -61,7 +61,6 @@
 		padding: 0.375rem 0.5rem 0.375rem 0.375rem;
 		margin-top: 0.25rem;
 		font-size: 0.875rem;
-		background-color: rgb(255 255 255 / 0.05);
 
 		/* Add a nicer chevron, spaced further from right-most borderr */
 		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
