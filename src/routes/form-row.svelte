@@ -6,7 +6,7 @@
 
 <div>
 	<label>
-		`${formatter.format(startTime)} - ${formatter.format(endTime)}`
+		{formatter.format(startTime)} - {formatter.format(endTime)}
 		<input autocomplete="off" />
 	</label>
 </div>
