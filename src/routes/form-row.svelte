@@ -5,10 +5,10 @@
 </script>
 
 <div>
-	<label>
+	<label for={formatter.format(startTime)}>
 		{formatter.format(startTime)} - {formatter.format(endTime)}
-		<input autocomplete="off" />
 	</label>
+	<input id={formatter.format(startTime)} autocomplete="off" />
 </div>
 
 <style>
