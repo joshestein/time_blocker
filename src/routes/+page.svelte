@@ -67,7 +67,7 @@
 			gap: 0.5rem;
 			padding: 1rem;
 			margin-top: 0.375rem;
-			max-width: 340px;
+			max-width: 290px;
 			width: 100%;
 	}
 </style>
