@@ -10,7 +10,6 @@
 
 	const timeBlocks: number[] = [];
 	for (let i = defaultStart; i <= defaultEnd; i++) timeBlocks.push(i);
-	// const formatter = Intl.DateTimeFormat('en-us', { hour: '2-digit', minute: '2-digit' });
 </script>
 
 <div class="settings-wrapper">
@@ -51,6 +50,14 @@
 		flex-flow: row wrap;
 		justify-content: space-between;
 		gap: 1.5rem;
+	}
+
+	@media (max-width: 600px) {
+		.settings-wrapper {
+			flex-flow: column wrap;
+			justify-content: space-between;
+			gap: 0.5rem;
+		}
 	}
 
 	select {
