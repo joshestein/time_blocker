@@ -19,7 +19,9 @@
 		<select id="start-select" bind:value={startHour}>
 <!--			<option>Earlier? What sort of ungodly hour do you rise?</option>-->
 			{#each timeBlocks as timeBlock}
-				<option selected={startHour === timeBlock} value={timeBlock}>{timeFormatter(timeBlock)}</option>
+				<option selected={startHour === timeBlock} value={timeBlock}
+					>{timeFormatter(timeBlock)}</option
+				>
 			{/each}
 		</select>
 	</div>
@@ -28,7 +30,9 @@
 		<label for="end-select">End</label>
 		<select id="end-select" bind:value={endHour}>
 			{#each timeBlocks as timeBlock}
-				<option selected={endHour=== timeBlock} value={timeBlock}>{timeFormatter(timeBlock)}</option>{/each}
+				<option selected={endHour === timeBlock} value={timeBlock}
+					>{timeFormatter(timeBlock)}</option
+				>{/each}
 		</select>
 	</div>
 	<div>
@@ -50,7 +54,7 @@
 	}
 
 	select {
-		appearance: none;  /* Reset appearance, remove default chevron */
+		appearance: none; /* Reset appearance, remove default chevron */
 		border-radius: 0.375rem;
 		padding: 0.375rem 0.5rem 0.375rem 0.375rem;
 		margin-top: 0.25rem;
@@ -64,10 +68,10 @@
 		min-width: 8rem;
 	}
 
-  label {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      font-weight: 500;
-  }
+	label {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+		font-weight: 500;
+	}
 </style>

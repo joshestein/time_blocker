@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { browser } from "$app/environment"
-	import FormRow from './form-row.svelte'
+	import FormRow from './form-row.svelte';
 	import Settings from './settings.svelte';
 
 	const getItemFromLocalStorage = (key: string, fallback: number) => {
@@ -20,7 +19,7 @@
 	let timeDelta = defaultTimeDelta;
 
 
-	let times: {start: Date, end: Date}[] = [];
+	let times: { start: Date; end: Date }[] = [];
 	$: {
 		const currentDate = new Date();
 		currentDate.setHours(startHour, 0, 0);
@@ -31,7 +30,7 @@
 		while (currentDate < endDate) {
 			const start = new Date(currentDate);
 			currentDate.setMinutes(currentDate.getMinutes() + timeDelta);
-			times.push({start, end: new Date(currentDate)})
+			times.push({ start, end: new Date(currentDate) });
 		}
 	// 	if (browser) {
 	// 		localStorage.setItem('startHour', startHour.toString());
@@ -53,21 +52,21 @@
 
 <style>
 	h1 {
-			margin-bottom: 0;
+		margin-bottom: 0;
 	}
 
 	h5 {
-			margin-top: 0.25rem;
-      color: var(--accent);
+		margin-top: 0.25rem;
+		color: var(--accent);
 	}
 
 	#time-blocks {
-			display: flex;
-			flex-flow: column wrap;
-			gap: 0.5rem;
-			padding: 1rem;
-			margin-top: 0.375rem;
-			max-width: 290px;
-			width: 100%;
+		display: flex;
+		flex-flow: column wrap;
+		gap: 0.5rem;
+		padding: 1rem;
+		margin-top: 0.375rem;
+		max-width: 290px;
+		width: 100%;
 	}
 </style>
