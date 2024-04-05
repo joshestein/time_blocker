@@ -1,35 +1,46 @@
-<script>
-	// import FormRow from './form-row.svelte'
+<script lang="ts">
+	import { browser } from "$app/environment"
+	import FormRow from './form-row.svelte'
 	import Settings from './settings.svelte';
 
-	// TODO: local storage
-	let startTime = new Date();
-	startTime.setHours(9, 0, 0);
+	const getItemFromLocalStorage = (key: string, fallback: number) => {
+		if (browser) console.log(key, localStorage.getItem(key));
+		return browser ? localStorage.getItem(key) ?? fallback : fallback;
+	}
 
-	let endTime = new Date();
-	endTime.setHours(17, 0, 0);
+	// const [defaultStartHour, defaultEndTime] = getDefaultHours();
+	// const storedStart = getItemFromLocalStorage('startHour', defaultStartHour);
+	// let startHour = typeof storedStart === 'string' ? Number(storedStart) : storedStart;
+	let startHour = 10;
+	let endHour = 17;
 
-	let timeDelta = 60;
-	let timeBlocks: {start: Date, end: Date}[] = [];
+	const defaultTimeDelta = 60;
+	// let storedTimeDelta = browser ? window.localStorage.getItem('timeDelta') ?? defaultTimeDelta : defaultTimeDelta;
+	// let timeDelta = typeof storedTimeDelta === 'string' ? Number(storedTimeDelta) : storedTimeDelta;
+	let timeDelta = defaultTimeDelta;
+
+	let hours: number[] = [];
 
 	$: {
-		timeBlocks = [];
-		let currentTime = new Date(startTime);
-		while (currentTime <= endTime) {
-			const start = new Date(currentTime);
-			currentTime.setMinutes(currentTime.getMinutes() + timeDelta);
-			timeBlocks.push({start, end: new Date(currentTime)});
+		hours = [];
+		for (let i = startHour; i < endHour; i++) {
+			hours.push(i);
 		}
+	// 	if (browser) {
+	// 		localStorage.setItem('startHour', startHour.toString());
+	// 		localStorage.setItem('endHour', endHour.toString());
+	// 		localStorage.setItem('timeDelta', timeDelta.toString());
+	// 	}
 	}
 
 </script>
 
 <h1>Time Blocker</h1>
 <h5>What do you want to get done?</h5>
-<Settings bind:startTime bind:endTime bind:timeDelta />
+<Settings bind:startHour bind:endHour bind:timeDelta />
 <div id="time-blocks">
-	{#each timeBlocks as tb}
-		<FormRow startTime={tb.start} endTime={tb.end}/>
+	{#each hours as hour}
+		<FormRow startHour={hour} />
 	{/each}
 </div>
 

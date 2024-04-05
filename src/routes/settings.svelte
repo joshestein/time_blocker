@@ -1,47 +1,41 @@
 <script lang="ts">
+	import { hourFormatter } from '$lib/utils.js';
+
 	let timeDeltaOptions = [15, 30, 45, 60];
-	export let startTime: Date;
-	export let endTime: Date;
+	const [defaultStart, defaultEnd] = [9, 19];
+
+	export let startHour: number;
+	export let endHour: number;
 	export let timeDelta: number;
 
-	// This goddamn nonsense is because if we create new Date() objects for the start and end times
-	// Svelte cannot properly bind the initial values (since they are different objects) and so the start and end
-	// times would not be properly selected. This took me way too long to figure out.
-	const timeBlocks: Date[] = [startTime];
-	let currentTime = new Date(startTime);
-	currentTime.setMinutes(currentTime.getMinutes() + 60);
-	while (currentTime < endTime) {
-		timeBlocks.push(new Date(currentTime));
-		currentTime.setMinutes(currentTime.getMinutes() + 60);
-	}
-	timeBlocks.push(endTime);
-
-	const formatter = Intl.DateTimeFormat('en-us', { hour: '2-digit', minute: '2-digit' });
+	const timeBlocks: number[] = [];
+	for (let i = defaultStart; i < defaultEnd; i++) timeBlocks.push(i);
+	// const formatter = Intl.DateTimeFormat('en-us', { hour: '2-digit', minute: '2-digit' });
 </script>
 
 <div class="settings-wrapper">
 	<div>
 		<label for="start-select">Start</label>
-		<select id="start-select" bind:value={startTime}>
+		<select id="start-select" bind:value={startHour}>
+<!--			<option>Earlier? What sort of ungodly hour do you rise?</option>-->
 			{#each timeBlocks as timeBlock}
-				<option value={timeBlock}>{formatter.format(timeBlock)}</option>
+				<option selected={startHour === timeBlock} value={timeBlock}>{hourFormatter(timeBlock)}</option>
 			{/each}
 		</select>
 	</div>
 
 	<div>
 		<label for="end-select">End</label>
-		<select id="end-select" bind:value={endTime}>
+		<select id="end-select" bind:value={endHour}>
 			{#each timeBlocks as timeBlock}
-				<option value={timeBlock}>{formatter.format(timeBlock)}</option>
-			{/each}
+				<option selected={endHour=== timeBlock} value={timeBlock}>{hourFormatter(timeBlock)}</option>{/each}
 		</select>
 	</div>
 	<div>
 		<label for="time-delta">Delta</label>
 		<select id="time-delta" bind:value={timeDelta}>
 			{#each timeDeltaOptions as option}
-				<option value={option}>{option} minutes</option>
+				<option selected={timeDelta === option} value={option}>{option} minutes</option>
 			{/each}
 		</select>
 	</div>
