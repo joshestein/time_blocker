@@ -65,7 +65,7 @@
 		background-position: right 0.5rem center;
 		background-repeat: no-repeat;
 		background-size: 1.5em 1.5em;
-		min-width: 8rem;
+		width: 8rem;
 	}
 
 	label {
