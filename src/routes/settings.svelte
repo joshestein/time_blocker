@@ -2,7 +2,7 @@
 	import { timeFormatter } from '$lib/utils.js';
 
 	let timeDeltaOptions = [15, 30, 45, 60];
-	const [defaultStart, defaultEnd] = [9, 19];
+	const [defaultStart, defaultEnd] = [7, 19];
 
 	export let startHour: number;
 	export let endHour: number;
