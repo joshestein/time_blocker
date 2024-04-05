@@ -9,7 +9,7 @@
 	export let timeDelta: number;
 
 	const timeBlocks: number[] = [];
-	for (let i = defaultStart; i < defaultEnd; i++) timeBlocks.push(i);
+	for (let i = defaultStart; i <= defaultEnd; i++) timeBlocks.push(i);
 	// const formatter = Intl.DateTimeFormat('en-us', { hour: '2-digit', minute: '2-digit' });
 </script>
 
