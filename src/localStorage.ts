@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-export const localStore = (key: string, initial: number) => {
+export const localStore = (key: string, initial: any) => {
 	// receives the key of the local storage and an initial value
 	if (!browser) return;
 
-	const toString = (value: number) => JSON.stringify(value, null, 2); // helper function
+	const toString = (value: any) => JSON.stringify(value, null, 2); // helper function
 
 	if (localStorage.getItem(key) === null) {
 		// item not present in local storage
@@ -18,7 +18,7 @@ export const localStore = (key: string, initial: number) => {
 
 	return {
 		subscribe,
-		set: (value: number) => {
+		set: (value: any) => {
 			localStorage.setItem(key, toString(value)); // save also to local storage as a string
 			return set(value);
 		},
