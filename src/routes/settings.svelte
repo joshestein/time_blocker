@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { hourFormatter } from '$lib/utils.js';
+	import { timeFormatter } from '$lib/utils.js';
 
 	let timeDeltaOptions = [15, 30, 45, 60];
 	const [defaultStart, defaultEnd] = [9, 19];
@@ -19,7 +19,7 @@
 		<select id="start-select" bind:value={startHour}>
 <!--			<option>Earlier? What sort of ungodly hour do you rise?</option>-->
 			{#each timeBlocks as timeBlock}
-				<option selected={startHour === timeBlock} value={timeBlock}>{hourFormatter(timeBlock)}</option>
+				<option selected={startHour === timeBlock} value={timeBlock}>{timeFormatter(timeBlock)}</option>
 			{/each}
 		</select>
 	</div>
@@ -28,7 +28,7 @@
 		<label for="end-select">End</label>
 		<select id="end-select" bind:value={endHour}>
 			{#each timeBlocks as timeBlock}
-				<option selected={endHour=== timeBlock} value={timeBlock}>{hourFormatter(timeBlock)}</option>{/each}
+				<option selected={endHour=== timeBlock} value={timeBlock}>{timeFormatter(timeBlock)}</option>{/each}
 		</select>
 	</div>
 	<div>
