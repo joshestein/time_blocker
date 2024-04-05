@@ -7,6 +7,7 @@
 	let startHour: number;
 	let endHour: number;
 	let timeDelta: number;
+	let data: string[];
 
 	let startStore = localStore('startHour', 7);
 	const startUnsubscribe = startStore?.subscribe((val) => (startHour = val));
@@ -17,10 +18,14 @@
 	let deltaStore = localStore('delta', 60);
 	const deltaUnsubscribe = deltaStore?.subscribe((val) => (timeDelta = val));
 
+	let dataStore = localStore('data', []);
+	const dataUnsubscribe = dataStore?.subscribe((val) => (data = val));
+
 	onDestroy(() => {
 		startUnsubscribe?.();
 		endUnsubscribe?.();
 		deltaUnsubscribe?.();
+		dataUnsubscribe?.();
 	});
 
 	let times: { start: Date; end: Date }[] = [];
@@ -28,6 +33,7 @@
 		startStore?.set(startHour);
 		endStore?.set(endHour);
 		deltaStore?.set(timeDelta);
+		dataStore?.set(data);
 
 		const currentDate = new Date();
 		currentDate.setHours(startHour, 0, 0);
@@ -48,8 +54,8 @@
 {#if startHour && endHour && timeDelta}
 	<Settings bind:startHour bind:endHour bind:timeDelta />
 	<div id="time-blocks">
-		{#each times as time}
-			<FormRow start={time.start} end={time.end} />
+		{#each times as time, i}
+			<FormRow start={time.start} end={time.end} bind:initial={data[i]} />
 		{/each}
 	</div>
 {/if}

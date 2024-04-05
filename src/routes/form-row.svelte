@@ -1,6 +1,8 @@
 <script lang="ts">
 	export let start: Date;
 	export let end: Date;
+	export let initial: string | undefined;
+
 	const formatter = Intl.DateTimeFormat('en-us', {
 		hour: '2-digit',
 		minute: '2-digit',
@@ -12,13 +14,12 @@
 	<label for={start.toString()}>
 		{formatter.format(start)} - {formatter.format(end)}
 	</label>
-	<input id={start.toString()} autocomplete="off" />
+	<input id={start.toString()} autocomplete="off" bind:value={initial} />
 </div>
 
 <style>
 	div {
 		display: flex;
-		/*display: var(--display, none);*/
 		flex-flow: row wrap;
 		justify-content: space-between;
 		align-items: center;
