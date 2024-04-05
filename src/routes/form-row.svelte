@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { hourFormatter } from '$lib/utils';
-
-	export let startHour;
-	// export let endHour;
-	// const formatter = Intl.DateTimeFormat('en-us', { hour: 'numeric', minute: 'numeric' });
+	export let start: Date;
+	export let end: Date;
+	const formatter = Intl.DateTimeFormat('en-us', { hour: '2-digit', minute: '2-digit', hour12: false });
 </script>
 
 <div>
-	<label for={startHour}>
-		{hourFormatter(startHour)} - {hourFormatter(startHour + 1)}
+	<label for={start.toString()}>
+		{formatter.format(start)} - {formatter.format(end)}
 	</label>
-	<input id={startHour} autocomplete="off" />
+	<input id={start.toString()} autocomplete="off" />
 </div>
 
 <style>

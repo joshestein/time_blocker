@@ -19,12 +19,19 @@
 	// let timeDelta = typeof storedTimeDelta === 'string' ? Number(storedTimeDelta) : storedTimeDelta;
 	let timeDelta = defaultTimeDelta;
 
-	let hours: number[] = [];
 
+	let times: {start: Date, end: Date}[] = [];
 	$: {
-		hours = [];
-		for (let i = startHour; i < endHour; i++) {
-			hours.push(i);
+		const currentDate = new Date();
+		currentDate.setHours(startHour, 0, 0);
+		const endDate = new Date();
+		endDate.setHours(endHour, 0, 0);
+
+		times = [];
+		while (currentDate < endDate) {
+			const start = new Date(currentDate);
+			currentDate.setMinutes(currentDate.getMinutes() + timeDelta);
+			times.push({start, end: new Date(currentDate)})
 		}
 	// 	if (browser) {
 	// 		localStorage.setItem('startHour', startHour.toString());
@@ -39,8 +46,8 @@
 <h5>What do you want to get done?</h5>
 <Settings bind:startHour bind:endHour bind:timeDelta />
 <div id="time-blocks">
-	{#each hours as hour}
-		<FormRow startHour={hour} />
+	{#each times as time}
+		<FormRow start={time.start} end={time.end} />
 	{/each}
 </div>
 
