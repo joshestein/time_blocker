@@ -17,7 +17,7 @@
 	<div>
 		<label for="start-select">Start</label>
 		<select id="start-select" bind:value={startHour}>
-<!--			<option>Earlier? What sort of ungodly hour do you rise?</option>-->
+			<option value="7">Earlier? What sort of ungodly hour do you rise?</option>
 			{#each timeBlocks as timeBlock}
 				<option selected={startHour === timeBlock} value={timeBlock}
 					>{timeFormatter(timeBlock)}</option
