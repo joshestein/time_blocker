@@ -1,54 +1,58 @@
 <script lang="ts">
 	import FormRow from './form-row.svelte';
 	import Settings from './settings.svelte';
+	import { onDestroy } from 'svelte';
+	import { localStore } from '../localStorage';
 
-	const getItemFromLocalStorage = (key: string, fallback: number) => {
-		if (browser) console.log(key, localStorage.getItem(key));
-		return browser ? localStorage.getItem(key) ?? fallback : fallback;
-	}
+	let startHour: number;
+	let endHour: number;
+	let timeDelta: number;
 
-	// const [defaultStartHour, defaultEndTime] = getDefaultHours();
-	// const storedStart = getItemFromLocalStorage('startHour', defaultStartHour);
-	// let startHour = typeof storedStart === 'string' ? Number(storedStart) : storedStart;
-	let startHour = 10;
-	let endHour = 17;
+	let startStore = localStore('startHour', 7);
+	const startUnsubscribe = startStore?.subscribe((val) => (startHour = val));
 
-	const defaultTimeDelta = 60;
-	// let storedTimeDelta = browser ? window.localStorage.getItem('timeDelta') ?? defaultTimeDelta : defaultTimeDelta;
-	// let timeDelta = typeof storedTimeDelta === 'string' ? Number(storedTimeDelta) : storedTimeDelta;
-	let timeDelta = defaultTimeDelta;
+	let endStore = localStore('endHour', 19);
+	const endUnsubscribe = endStore?.subscribe((val) => (endHour = val));
 
+	let deltaStore = localStore('delta', 60);
+	const deltaUnsubscribe = deltaStore?.subscribe((val) => (timeDelta = val));
+
+	onDestroy(() => {
+		startUnsubscribe?.();
+		endUnsubscribe?.();
+		deltaUnsubscribe?.();
+	});
 
 	let times: { start: Date; end: Date }[] = [];
 	$: {
+		startStore?.set(startHour);
+		endStore?.set(endHour);
+		deltaStore?.set(timeDelta);
+
 		const currentDate = new Date();
 		currentDate.setHours(startHour, 0, 0);
 		const endDate = new Date();
-		endDate.setHours(endHour, 0, 0);
+		endDate.setHours(endHour - 1, 0, 0);
 
 		times = [];
 		while (currentDate < endDate) {
 			const start = new Date(currentDate);
-			currentDate.setMinutes(currentDate.getMinutes() + timeDelta);
+			currentDate.setMinutes(currentDate.getMinutes() + timeDelta, 0, 0);
 			times.push({ start, end: new Date(currentDate) });
 		}
-	// 	if (browser) {
-	// 		localStorage.setItem('startHour', startHour.toString());
-	// 		localStorage.setItem('endHour', endHour.toString());
-	// 		localStorage.setItem('timeDelta', timeDelta.toString());
-	// 	}
 	}
-
 </script>
 
 <h1>Time Blocker</h1>
 <h5>What do you want to get done?</h5>
-<Settings bind:startHour bind:endHour bind:timeDelta />
-<div id="time-blocks">
-	{#each times as time}
-		<FormRow start={time.start} end={time.end} />
-	{/each}
-</div>
+{#if startHour && endHour && timeDelta}
+	<Settings bind:startHour bind:endHour bind:timeDelta />
+	<div id="time-blocks">
+		{#each times as time}
+			<FormRow start={time.start} end={time.end} />
+		{/each}
+	</div>
+{/if}
 
 <style>
 	h1 {
